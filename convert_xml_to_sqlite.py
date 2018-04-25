@@ -156,20 +156,21 @@ def parse_and_load(filepath, db):
                     item_els
                 ):
                     # For items, we derive an ID based on a hash of key content
+                    item_text = '\n'.join(item_el.itertext())
                     hashme = "{date}:{member_id}:{person_id}:{category_id}:{record}:{item}".format(
                         date=date,
                         member_id=member_id,
                         person_id=person_id,
                         category_id=category_id,
                         record=record,
-                        item=item_el.text,
+                        item=item_text,
                     )
                     hashid = hashlib.sha1(
                         hashme.encode("utf8")
                     ).hexdigest()
                     item = {
                         "hash": hashid,
-                        "item": item_el.text,
+                        "item": item_text,
                         "category_id": category_id,
                         "date": date,
                         "person_id": person_id,
