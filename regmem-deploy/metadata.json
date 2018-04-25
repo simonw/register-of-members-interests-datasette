@@ -1,0 +1,30 @@
+{
+    "title": " UK Registers of Members Interest",
+    "description": "MPs declare conflicts of interest, and sources of their income.",
+    "source": "mySociety Data",
+    "source_url": "http://data.mysociety.org/datasets/members-interest/",
+    "databases": {
+        "regmem": {
+            "tables": {
+                "categories": {
+                    "label_column": "name"
+                },
+                "items": {
+                    "sortable_columns": [
+                        "sort_order",
+                        "hash",
+                        "date",
+                        "category_id",
+                        "member_id",
+                        "person_id",
+                        "record_id"
+                    ]
+                }
+            },
+            "queries": {
+            	"mps_ranked_by_matching_overseas_line_items": "select people.id, people.name, count(*) as num_items, group_concat(item, ':::'), group_concat(hash, ' : '), group_concat(date, ' : ') from items\njoin people on items.person_id = people.id\njoin categories on items.category_id = categories.id\nwhere items.category_id in (\n  -- All of the overseas trip categories\n  '80ef1083', 'b634ef43', 'decaa699', 'd06ab996', 'f455437c',\n  'da933c52', 'f52715fb', 'b30ee7b9', '8e53f3ff', '7c43f5eb',\n  '891eb863'\n)\nand items.rowid in (select rowid from [items_fts] where [items_fts] match :search) \ngroup by items.person_id\norder by num_items desc;",
+                "mps_ranked_by_matching_shareholdings": "select people.id, people.name, count(*) as num_items, group_concat(item, ':::'), group_concat(date, ' : ') from items\njoin people on items.person_id = people.id\njoin categories on items.category_id = categories.id\nwhere items.category_id in (\n  -- All forms of shareholding\n  \"Aead2f460\", \"a5bbc519\",  \"3aff2389\",\n  \"21983754\",  \"5b34324e\",  \"b1cf7e3e\"\n)\nand items.rowid in (select rowid from [items_fts] where [item] match :search) \ngroup by items.person_id\norder by num_items desc;"
+            }
+        }
+    }
+}
