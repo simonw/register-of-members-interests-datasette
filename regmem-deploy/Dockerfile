@@ -9,4 +9,4 @@ RUN datasette inspect regmem.db --inspect-file inspect-data.json
 
 EXPOSE 8001
 
-CMD ["datasette", "serve", "regmem.db", "--host", "0.0.0.0", "--cors", "--port", "8001", "--inspect-file", "inspect-data.json", "-m", "metadata.json" "--template-dir", "templates"]
+CMD datasette serve regmem.db --host 0.0.0.0 --cors --port 8001 --inspect-file inspect-data.json -m metadata.json --template-dir templates
