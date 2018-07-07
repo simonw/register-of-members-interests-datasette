@@ -3,8 +3,9 @@ RUN apt update
 RUN apt install -y python3-dev gcc wget
 ADD metadata.json metadata.json
 ADD templates templates
-RUN wget -q "https://static.simonwillison.net/static/2018/regmem.db"
-RUN pip install https://github.com/simonw/datasette/archive/master.zip
+RUN wget "https://static.simonwillison.net/static/2018/regmem.db"
+RUN pip install datasette
+RUN pip install datasette-vega
 RUN datasette inspect regmem.db --inspect-file inspect-data.json
 
 EXPOSE 8001
