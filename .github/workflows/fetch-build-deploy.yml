@@ -1,6 +1,8 @@
 name: Fetch build and deploy
 
 on:
+  schedule:
+    - cron: '7 2 * * *'
   workflow_dispatch:
   push:
     branches:
@@ -34,20 +36,20 @@ jobs:
       run: source rsync-latest.sh
     - name: build database
       run: source create-db.sh
-    # - name: Set variables to decide if we should deploy
-    #   id: decide_variables
-    #   run: |-
-    #     echo "##[set-output name=latest;]$(datasette inspect regmem.db | jq '.regmem.hash' -r)"
-    #     echo "##[set-output name=deployed;]$(curl -s https://register-of-members-interests.datasettes.com/-/databases.json | jq '.[0].hash' -r)"
+    - name: Set variables to decide if we should deploy
+      id: decide_variables
+      run: |-
+        echo "##[set-output name=latest;]$(datasette inspect regmem.db | jq '.regmem.hash' -r)"
+        echo "##[set-output name=deployed;]$(curl -s https://register-of-members-interests.datasettes.com/-/databases.json | jq '.[0].hash' -r)"
     - name: Set up Cloud Run
-    #  if: github.event_name == 'workflow_dispatch' || steps.decide_variables.outputs.latest != steps.decide_variables.outputs.deployed
+      if: github.event_name == 'workflow_dispatch' || steps.decide_variables.outputs.latest != steps.decide_variables.outputs.deployed
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '275.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
     - name: Deploy to Cloud Run
-    #  if: github.event_name == 'workflow_dispatch' || steps.decide_variables.outputs.latest != steps.decide_variables.outputs.deployed
+      if: github.event_name == 'workflow_dispatch' || steps.decide_variables.outputs.latest != steps.decide_variables.outputs.deployed
       run: |-
         gcloud config set run/region us-central1
         gcloud config set project datasette-222320
