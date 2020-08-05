@@ -24,6 +24,10 @@ jobs:
       with:
         path: scrapedxml
         key: ${{ runner.os }}-scrapedxml
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
     - name: Install datasette
       run: pip install datasette
     - name: rsync latest XML
