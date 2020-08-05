@@ -19,10 +19,6 @@
                         "person_id",
                         "record_id"
                     ],
-                    "facets": [
-                        "category_id",
-                        "person_id"
-                    ],
                     "sort_desc": "date"
                 }
             },
