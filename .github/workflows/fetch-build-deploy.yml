@@ -55,6 +55,7 @@ jobs:
         gcloud config set project datasette-222320
         datasette publish cloudrun regmem.db \
             --service regmem \
+            --templates regmem-deploy/templates \
             -m regmem-deploy/metadata.json \
             --memory 2Gi \
             --extra-options="--config facet_time_limit_ms:1000"
