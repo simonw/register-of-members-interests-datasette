@@ -3,6 +3,8 @@
     "description": "MPs declare conflicts of interest, and sources of their income.",
     "source": "mySociety Data",
     "source_url": "http://data.mysociety.org/datasets/members-interest/",
+    "about": "simonw/register-of-members-interests",
+    "about_url": "https://github.com/simonw/register-of-members-interests",
     "databases": {
         "regmem": {
             "tables": {
