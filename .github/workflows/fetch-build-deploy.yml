@@ -58,6 +58,7 @@ jobs:
         datasette publish cloudrun regmem.db \
             --service regmem \
             --install "datasette-graphql>=0.12" \
+            --install datasette-atom \
             --template-dir regmem-deploy/templates \
             -m regmem-deploy/metadata.json \
             --memory 2Gi \
