@@ -57,7 +57,7 @@ jobs:
         gcloud config set project datasette-222320
         datasette publish cloudrun regmem.db \
             --service regmem \
-            --install datasette-graphql \
+            --install "datasette-graphql>=0.12" \
             --template-dir regmem-deploy/templates \
             -m regmem-deploy/metadata.json \
             --memory 2Gi \
