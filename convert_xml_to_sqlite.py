@@ -53,31 +53,11 @@ def init_db(filename):
     conn.close()
 
 
-def best_fts_version():
-    "Discovers the most advanced supported SQLite FTS version"
-    conn = sqlite3.connect(":memory:")
-    for fts in ("FTS5", "FTS4", "FTS3"):
-        try:
-            conn.execute(
-                "CREATE VIRTUAL TABLE v USING {} (t TEXT);".format(
-                    fts
-                )
-            )
-            return fts
-
-        except sqlite3.OperationalError:
-            continue
-
-    return None
-
-
 def create_and_populate_fts(conn):
     create_sql = """
         CREATE VIRTUAL TABLE "items_fts"
-        USING {fts_version} (item, person_name, content="items")
-    """.format(
-        fts_version=best_fts_version()
-    )
+        USING FTS5 (item, person_name, content="items")
+    """)
     conn.executescript(create_sql)
     conn.executescript(
         """
