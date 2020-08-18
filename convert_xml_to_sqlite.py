@@ -57,7 +57,7 @@ def create_and_populate_fts(conn):
     create_sql = """
         CREATE VIRTUAL TABLE "items_fts"
         USING FTS5 (item, person_name, content="items")
-    """)
+    """
     conn.executescript(create_sql)
     conn.executescript(
         """
