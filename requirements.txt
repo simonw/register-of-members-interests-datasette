@@ -1,3 +1,4 @@
 datasette-graphql
+datasette-pretty-json
 datasette-atom
 datasette
