@@ -60,6 +60,6 @@ jobs:
             --install "datasette-graphql>=0.12" \
             --install datasette-atom \
             --template-dir regmem-deploy/templates \
-            -m regmem-deploy/metadata.json \
+            -m regmem-deploy/metadata.yml \
             --memory 2Gi \
             --extra-options="--config facet_time_limit_ms:1000"
